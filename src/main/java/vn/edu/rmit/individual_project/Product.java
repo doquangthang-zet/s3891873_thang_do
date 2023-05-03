@@ -1,5 +1,8 @@
 package vn.edu.rmit.individual_project;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author <Do Quang Thang - S3891873>
  */
@@ -11,12 +14,23 @@ public abstract class Product {
     private int quantityAvailable;
     private double price;
 
+    private TaxType tax;
+    private List<String> couponCodeList;
+
     //Constructor
-    public Product(String name, String description, int quantityAvailable, double price) {
+    public Product(String name, String description, int quantityAvailable, double price, int taxType) {
         this.name = name;
         this.description = description;
         this.quantityAvailable = quantityAvailable;
         this.price = price;
+        if(taxType == 3) {
+            tax = new LuxuryTax();
+        } else if (taxType == 2) {
+            tax = new NormalTax();
+        } else {
+            tax = new TaxFree();
+        }
+        couponCodeList = new ArrayList<>();
     }
 
     //Abstract method
@@ -54,6 +68,22 @@ public abstract class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public TaxType getTax() {
+        return tax;
+    }
+
+    public void setTax(TaxType tax) {
+        this.tax = tax;
+    }
+
+    public List<String> getCouponCodeList() {
+        return couponCodeList;
+    }
+
+    public void setCouponCodeList(List<String> couponCodeList) {
+        this.couponCodeList = couponCodeList;
     }
 
     @Override

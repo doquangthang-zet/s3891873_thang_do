@@ -1,5 +1,8 @@
 package vn.edu.rmit.individual_project;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,20 +17,103 @@ import java.util.Set;
 public class Main {
     //Use Set interface
     private static Set <Product> productList;
-    //User List interface
+    //Use List interface
     private static List <ShoppingCart> shoppingCartList;
+    private static List <Coupon> couponList;
     private static int cardId;
+    private static TaxFree tFree;
+    private static NormalTax tNormal;
+    private static LuxuryTax tLuxury;
     private static Scanner sc;
 
     public static void main(String[] args) {
         productList = new HashSet<>();
         shoppingCartList = new ArrayList<>();
+        couponList = new ArrayList<>();
         cardId = 0;
+        tFree = new TaxFree();
+        tNormal = new NormalTax();
+        tLuxury = new LuxuryTax();
+
+        // String filePath = "java_projects/src/FurtherPrograming/s3891873_thang_do/src/main/java/vn/edu/rmit/individual_project/products.txt";
+        // BufferedReader reader = null;
+        // try {
+        //     reader = new BufferedReader(new FileReader(filePath));
+        //     String line = reader.readLine();
+        //     while (line != null) {
+        //         String[] fields = line.split(", ");
+        //         String type = fields[0];
+        //         if(type.equals("Digital")) {
+        //             String name = fields[1];
+        //             String description = fields[2];
+        //             int quantity = Integer.parseInt(fields[3]);
+        //             double price = Double.parseDouble(fields[4]);
+        //             double weight = Double.parseDouble(fields[5]);
+        //             int taxType = Integer.parseInt(fields[6]);
+        //             String msg = fields[7];
+
+        //             Product p = new DigitalProduct(name, description, quantity, price, taxType);
+
+        //             String[] coupon = fields[8].split(": ");
+        //             String couponType = coupon[0];
+
+        //             if(couponType.equals("price")) {
+        //                 String code = coupon[1];
+        //                 double couponAmount = Double.parseDouble(coupon[2]);
+
+        //                 Coupon c = new CouponByPrice(p, code, couponAmount);
+        //                 couponList.add(c);
+        //             } else if (couponType.equals("percent")) {
+        //                 String code = coupon[1];
+        //                 int couponAmount = Integer.parseInt(coupon[2]);
+
+        //                 Coupon c = new CouponByPercent(p, code, couponAmount);
+        //                 couponList.add(c);
+        //             }
+                    
+        //             productList.add(p);
+        //             line = reader.readLine();
+        //         } 
+        //         // else if (type.equals("Physical")) {
+        //         //     int age = Integer.parseInt(fields[1]);
+        //         //     String grade = fields[2];
+        //         //     Product p = new DigitalGiftProduct(name, age, grade);
+        //         //     productList.add(p);
+        //         //     line = reader.readLine();
+        //         // } else if (type.equals("DigitalGift")) {
+        //         //     int age = Integer.parseInt(fields[1]);
+        //         //     String grade = fields[2];
+        //         //     Product p = new DigitalGiftProduct(name, age, grade);
+        //         //     productList.add(p);
+        //         //     line = reader.readLine();
+        //         // } else {
+        //         //     int age = Integer.parseInt(fields[1]);
+        //         //     String grade = fields[2];
+        //         //     Product p = new DigitalGiftProduct(name, age, grade);
+        //         //     productList.add(p);
+        //         //     line = reader.readLine();
+        //         // }
+                
+        //     }
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // } finally {
+        //     try {
+        //         reader.close();
+        //     } catch (IOException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
+
+        // for(Product p : productList) {
+        //     System.out.println(p.toString());
+        // }
 
         System.out.println();
         System.out.println("Welcome to our shopping service!");
         System.out.println("--------------------------------------------------------------------------------------------------------------");
 
+        
         showInitialOptions();
     }
 
@@ -35,7 +121,7 @@ public class Main {
     public static void showInitialOptions() {
         System.out.println();
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("Please select one of the following services:\n1. Create new products\n2. Edit products\n3. View all products\n4. Search Product\n5. Create new shopping cart\n6. Add product\n7. Remove product\n8. Display cart amount\n9. Display all shopping cart\n0. Quit");
+        System.out.println("Please select one of the following services:\n1. Create new products\n2. Edit products\n3. View all products\n4. Search Product\n5. Create new coupon\n6. View all coupons\n7. Create new shopping cart\n8. Add product\n9. Remove product\n10. Apply coupon to cart\n11. Display cart amount\n12. Display all shopping cart\n13. Display specific cart\n14. Set message\n0. Quit");
         sc = new Scanner(System.in);
 
         int choice = sc.nextInt();
@@ -54,19 +140,34 @@ public class Main {
                 searchProduct();
                 break;
             case 5:
-                createNewShoppingCart();
+                createNewCoupon();
                 break;
             case 6:
-                addProduct();
+                viewAllCoupons();
                 break;
             case 7:
-                removeProduct();
+                createNewShoppingCart();
                 break;
             case 8:
-                displayCartAmount();
+                addProduct();
                 break;
             case 9:
+                removeProduct();
+                break;
+            case 10:
+                applyCoupon();
+                break;
+            case 11:
+                displayCartAmount();
+                break;
+            case 12:
                 displayAllShoppingCart();
+                break;
+            case 13:
+                displayCart();
+                break;
+            case 14:
+                setMessageForCartItem();
                 break;
             case 0:
                 sc.close();
@@ -86,7 +187,7 @@ public class Main {
     */
     public static void createNewProduct() {
         System.out.println("Creating new product....\nPlease choose product type:\n1. Digital product\n2. Physical product\n3. Go back");
-        sc = new Scanner(System.in);
+        // sc = new Scanner(System.in);
 
         int choice = sc.nextInt();
         sc.nextLine();
@@ -111,6 +212,9 @@ public class Main {
      * create a new digital product
     */
     public static void createNewDigitalProduct() {
+        String message = "";
+        Product newProduct;
+
         System.out.println("Creating new digital product....\nPlease enter product name: ");
         String name = sc.nextLine();
         System.out.println("Please enter product description: ");
@@ -122,8 +226,22 @@ public class Main {
         double price = sc.nextDouble();
         sc.nextLine();
 
-        System.out.println("Please enter product message (optional): ");
-        String message = sc.nextLine();
+        System.out.println("Please enter type of tax (1.Tax-free 2.Normal-tax 3.Luxury-tax): ");
+        int taxtype = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Do you want to use this product as gift? (1.Yes 2.No): ");
+        int giftChoice = sc.nextInt();
+        sc.nextLine();
+        
+        if(giftChoice == 1) {
+            System.out.println("Please enter product message (optional): ");
+            message = sc.nextLine();
+        } else if (giftChoice != 2) {
+            System.out.println("Wrong input! Try again!");
+            createNewDigitalProduct();
+        }
+        
 
         if(name.equals("") || description.equals("")) {
             System.out.println("Please enter all the fields!");
@@ -140,18 +258,32 @@ public class Main {
             }
 
             if(!doesExist) {
-                Product newProduct = new DigitalProduct(name, description, quantity, price);
+                // TaxType t = new TaxFree();
 
-                if(!message.equals("")) {
-                    ((DigitalProduct)newProduct).setMessage(message);
+                // if(taxtype == 1) {
+                //     t = tFree;
+                // } else if (taxtype == 2) {
+                //     t = tNormal;
+                // } else if (taxtype == 3) {
+                //     t = tLuxury;
+                // } else {
+                //     System.out.println("Wrong tax type input!");
+                //     createNewDigitalProduct();
+                // }  
+
+                if(giftChoice == 1) {
+                    System.out.println(tFree.getName());
+                    newProduct = new DigitalGiftProduct(name, description, quantity, price, taxtype);
+                    ((UsedAsGifts)newProduct).setMessage(message);
+                } else {
+                    newProduct = new DigitalProduct(name, description, quantity, price, taxtype);
                 }
-                
+                // newProduct.setTax(tFree);
+                // System.out.println(newProduct.getTax().getName());
                 productList.add(newProduct);
                 System.out.println(newProduct.getName() + " added successfully!");
             }
-
         }
-
         showInitialOptions();
     }
 
@@ -159,6 +291,9 @@ public class Main {
      * create a new physical product
     */
     public static void createNewPhysicalProduct() {
+        String message = "";
+        TaxType t;
+        Product newProduct;
         System.out.println("Creating new physical product....\nPlease enter product name: ");
         String name = sc.nextLine();
         System.out.println("Please enter product description: ");
@@ -174,12 +309,25 @@ public class Main {
         double weight = sc.nextDouble();
         sc.nextLine();
 
-        System.out.println("Please enter product message (optional): ");
-        String message = sc.nextLine();
+        System.out.println("Please enter type of tax (1.Tax-free 2.Normal-tax 3.Luxury-tax): ");
+        int taxtype = sc.nextInt();
+        sc.nextLine();
+        
+        System.out.println("Do you want to use this product as gift? (1.Yes 2.No): ");
+        int giftChoice = sc.nextInt();
+        sc.nextLine();
+        
+        if(giftChoice == 1) {
+            System.out.println("Please enter product message (optional): ");
+            message = sc.nextLine();
+        } else if (giftChoice != 2) {
+            System.out.println("Wrong input! Try again!");
+            createNewPhysicalProduct();
+        }
 
         if(name.equals("") || description.equals("")) {
             System.out.println("Please enter all the fields!");
-            createNewDigitalProduct();
+            createNewPhysicalProduct();
         } else {
             boolean doesExist = false;
 
@@ -192,18 +340,54 @@ public class Main {
             }
 
             if(!doesExist) {
-                Product newProduct = new PhysicalProduct(name, description, quantity, price, weight);
-
-                if(!message.equals("")) {
-                    ((PhysicalProduct)newProduct).setMessage(message);
+                // if(taxtype == 1) {
+                //     t = new TaxFree();
+                //     if(giftChoice == 1) {
+                //         newProduct = new PhysicalGiftProduct(name, description, quantity, price, weight, taxtype);
+                //         ((UsedAsGifts)newProduct).setMessage(message);  
+                //         // newProduct.setTax(t);       
+                //     } else {
+                //         newProduct = new PhysicalProduct(name, description, quantity, price, weight, taxtype);
+                //     }
+                //     productList.add(newProduct);
+                //     System.out.println(newProduct.getName() + " added successfully!");
+                // } else if (taxtype == 2) {
+                //     t = new NormalTax();
+                //     System.out.println(t.getName());
+                //     if(giftChoice == 1) {
+                //         newProduct = new PhysicalGiftProduct(name, description, quantity, price, weight, taxtype);
+                //         ((UsedAsGifts)newProduct).setMessage(message); 
+                //         // newProduct.setTax(t);         
+                //     } else {
+                //         newProduct = new PhysicalProduct(name, description, quantity, price, weight, taxtype);
+                //     }
+                //     productList.add(newProduct);
+                //     System.out.println(newProduct.getName() + " added successfully!");
+                // } else if (taxtype == 3) {
+                //     t = new TaxFree();
+                //     if(giftChoice == 1) {
+                //         newProduct = new PhysicalGiftProduct(name, description, quantity, price, weight, taxtype);
+                //         ((UsedAsGifts)newProduct).setMessage(message);         
+                //     } else {
+                //         newProduct = new PhysicalProduct(name, description, quantity, price, weight, taxtype);
+                //     }
+                //     productList.add(newProduct);
+                //     System.out.println(newProduct.getName() + " added successfully!");
+                // } else {
+                //     System.out.println("Wrong tax type input!");
+                //     createNewDigitalProduct();
+                // }
+                if(giftChoice == 1) {
+                    newProduct = new PhysicalGiftProduct(name, description, quantity, price, weight, taxtype);
+                    ((UsedAsGifts)newProduct).setMessage(message);  
+                    // newProduct.setTax(t);       
+                } else {
+                    newProduct = new PhysicalProduct(name, description, quantity, price, weight, taxtype);
                 }
-                
                 productList.add(newProduct);
                 System.out.println(newProduct.getName() + " added successfully!");
             }
-
         }
-
         showInitialOptions();
     }
 
@@ -222,14 +406,13 @@ public class Main {
                     // String newName = sc.nextLine();
                     // p.setName(newName);
 
-                    // System.out.println("Please enter new product description: ");
                     String description = sc.nextLine();
                     p.setDescription(description);
 
-                    System.out.println("Please enter new product available quantity: ");
-                    int quantity = sc.nextInt();
-                    sc.nextLine();
-                    p.setQuantityAvailable(quantity);
+                    // System.out.println("Please enter new product available quantity: ");
+                    // int quantity = sc.nextInt();
+                    // sc.nextLine();
+                    // p.setQuantityAvailable(quantity);
 
                     System.out.println("Please enter new product price: ");
                     double price = sc.nextDouble();
@@ -241,11 +424,38 @@ public class Main {
                         double weight = sc.nextDouble();
                         sc.nextLine();
                         ((PhysicalProduct)p).setWeight(weight);
+                    } else if (p instanceof PhysicalGiftProduct) {
+                        System.out.println("Please enter new product weight: ");
+                        double weight = sc.nextDouble();
+                        sc.nextLine();
+                        ((PhysicalGiftProduct)p).setWeight(weight);
+
+                        System.out.println("Please enter new product message (optional): ");
+                        String message = sc.nextLine();
+                        ((UsedAsGifts)p).setMessage(message);
+                    } else if (p instanceof DigitalGiftProduct) {
+                        System.out.println("Please enter new product message (optional): ");
+                        String message = sc.nextLine();
+                        ((UsedAsGifts)p).setMessage(message);
                     }
 
-                    System.out.println("Please enter new product message (optional): ");
-                    String message = sc.nextLine();
-                    ((UsedAsGifts)p).setMessage(message);
+                    System.out.println("Please enter new product tax type(1.Tax-free 2.Normal-tax 3.Luxury-tax): ");
+                    int taxtype = sc.nextInt();
+                    sc.nextLine();
+                    TaxType t;
+                    if(taxtype == 1) {
+                        t = new TaxFree();
+                        p.setTax(t);
+                    } else if (taxtype == 2) {
+                        t = new NormalTax();
+                        p.setTax(t);
+                    } else if (taxtype == 3) {
+                        t = new TaxFree();
+                        p.setTax(t);
+                    } else {
+                        System.out.println("Wrong tax type input!");
+                        editProduct();
+                    }
 
                     System.out.println("The product is edited successfully!");
                     doesExist = true;
@@ -302,6 +512,121 @@ public class Main {
         showInitialOptions();
     }
 
+    //Create new coupon tied to a specific product
+    public static void createNewCoupon() {
+        System.out.println("Creating new coupon....\nPlease choose coupon type:\n1. Price coupon\n2. Percent coupon\n3. Go back");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        if(choice == 1) {
+            System.out.println("Creating new price coupon....\nPlease enter product name to apply coupon: ");
+            String name = sc.nextLine();
+            System.out.println("Please enter coupon code: ");
+            String code = sc.nextLine();
+            System.out.println("Please enter deduct price: ");
+            double price = sc.nextDouble();
+            sc.nextLine();
+
+            if(name.equals("") || code.equals("")) {
+                System.out.println("Please enter all the fields!");
+                createNewCoupon();
+            } else {
+                boolean couponExist = false;
+                boolean productExist = false;
+
+                for (Coupon c: couponList) {
+                    if(c.getCouponCode().equals(code)) {
+                        System.out.println("The coupon already existed! Try new code!");
+                        couponExist = true;
+                        createNewCoupon();
+                    }
+                }
+                
+
+                if(!couponExist) {
+                    for (Product p: productList) {
+                        if(p.getName().equals(name)) {
+                            productExist = true;
+                            
+                            Coupon c = new CouponByPrice(p, code, price);
+                            couponList.add(c);
+                            p.getCouponCodeList().add(c.getCouponCode());
+                            System.out.println(c.getCouponCode() + " added successfully!");
+                        }
+                    }                    
+                    if(!productExist) {
+                        System.out.println("The product is not existing! Try another product!");
+                        createNewCoupon();
+                    }
+                }
+            }
+            showInitialOptions();
+        } else if (choice == 2) {
+            System.out.println("Creating new percent coupon....\nPlease enter product name to apply coupon: ");
+            String name = sc.nextLine();
+            System.out.println("Please enter coupon code: ");
+            String code = sc.nextLine();
+            System.out.println("Please enter deduct percent: ");
+            int percent = sc.nextInt();
+            sc.nextLine();
+
+            if(name.equals("") || code.equals("")) {
+                System.out.println("Please enter all the fields!");
+                createNewCoupon();
+            } else {
+                boolean couponExist = false;
+                boolean productExist = false;
+
+                for (Coupon c: couponList) {
+                    if(c.getCouponCode().equals(code)) {
+                        System.out.println("The coupon already existed! Try new code!");
+                        couponExist = true;
+                        createNewCoupon();
+                    }
+                }
+                
+
+                if(!couponExist) {
+                    for (Product p: productList) {
+                        if(p.getName().equals(name)) {
+                            productExist = true;
+                            
+                            Coupon c = new CouponByPercent(p, code, percent);
+                            couponList.add(c);
+                            p.getCouponCodeList().add(c.getCouponCode());
+                            System.out.println(c.getCouponCode() + " added successfully!");
+                        }
+                    }                    
+                    if(!productExist) {
+                        System.out.println("The product is not existing! Try another product!");
+                        createNewCoupon();
+                    }
+                }
+            }
+            showInitialOptions();
+        } else if (choice == 3) {
+            showInitialOptions();
+        } else {
+            System.out.println("Invalid input! Try again!");
+            createNewCoupon();
+        }
+    }
+
+    //View all existing coupon
+    public static void viewAllCoupons() {
+        if(couponList.size() > 0) {
+            for (Coupon c: couponList) {
+                System.out.println();
+                System.out.println(c.toString());
+                System.out.println("###########################################");
+            }
+        } else {
+            System.out.println("The shop doesn't have any coupon!");
+        }
+
+        showInitialOptions();
+    }
+
     // Create new shopping cart with auto-generated id
     public static void createNewShoppingCart() {
         cardId++;
@@ -313,30 +638,80 @@ public class Main {
 
     // Add a specific product to a specific shopping cart
     public static void addProduct() {
+        String msg = "";
+        int productId = 0;
+
+        System.out.println("Add new items or add more items to existing onces: \n1. New items\n2. Existing items");
+        int addingChoice = sc.nextInt();
+        sc.nextLine();
+
+        if (addingChoice != 1 && addingChoice != 2) {
+            System.out.println("Wrong input! Try again!");
+            addProduct();
+        }
+
         System.out.println("Please enter shopping cart ID to add: ");
         int cartId = sc.nextInt();
         sc.nextLine();
 
         System.out.println("Please enter product name to be added into the cart: ");
         String productName = sc.nextLine();
+        
+        if(addingChoice == 2) {
+            System.out.println("Please enter product ID(viewable by displayCart function): ");
+            productId = sc.nextInt();
+            sc.nextLine();
+        }
 
-        boolean doesExist = false;
+        System.out.println("Please enter quantity: ");
+        int quantity = sc.nextInt();
+        sc.nextLine();
+
+        // for(Product p : productList) {
+        //     if(p.getName().equals(productName)) {
+        //         if(p instanceof UsedAsGifts) {
+        //             System.out.println("Use these items as gifts or not: \n1. Yes\n2. No");
+        //             int gift = sc.nextInt();
+        //             sc.nextLine();
+
+        //             if(gift == 1) {
+        //                 System.out.println("Please enter message for this gift: ");
+        //                 msg = sc.nextLine();
+        //             } else if (gift == 2) {
+        //                 msg = "";
+        //             } else {
+        //                 System.out.println("Wrong input! Try again!");
+        //             }
+        //         }
+        //     }
+        // }
+           
+        boolean cartExist = false;
+        boolean productExist = false;
 
         for (ShoppingCart spc: shoppingCartList) {
             if(spc.getId() == cartId) {
+                cartExist = true;
                 for(Product p : productList) {
                     if(p.getName().equals(productName)) {
-                        if(spc.addItem(p) && spc.addItem(productName)) {
-                            doesExist = true;
+                        productExist = true;
+                        if(spc.addItem(p, quantity, addingChoice, productId)) {
                             System.out.println("The product: " + productName + " has been added successfully!");
+                        } else {
+                            System.out.println("The quantity may not enough! Try again!");
+                            addProduct();
                         }
                     }
                 }
             }
         }
 
-        if(!doesExist) {
-            System.out.println("Cannot find shopping cart ID/product name or the quantity is not enough or the product is already in the cart! Try again!");
+        if(!cartExist) {
+            System.out.println("Cannot find shopping cart ID! Try again!");
+            addProduct();
+        }
+        if(!productExist) {
+            System.out.println("Cannot find product name! Try again!");
             addProduct();
         }
         showInitialOptions();
@@ -344,6 +719,8 @@ public class Main {
 
     // Remove a specific product from a specific shopping cart
     public static void removeProduct() {
+        String msg = "";
+        int productId = 0;
         System.out.println("Please enter shopping cart ID to remove: ");
         int cartId = sc.nextInt();
         sc.nextLine();
@@ -351,25 +728,73 @@ public class Main {
         System.out.println("Please enter product name to be removed from the cart: ");
         String productName = sc.nextLine();
 
-        boolean doesExist = false;
+        System.out.println("Please enter product ID(viewable by displayCart function): ");
+        productId = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Please enter quantity: ");
+        int quantity = sc.nextInt();
+        sc.nextLine();
+
+        // System.out.println("Are they gifts or not: \n1. Gift\n2. Not gifts");
+        // int gift = sc.nextInt();
+        // sc.nextLine();
+
+        // if(gift == 1) {
+        //     msg = "gift";
+        // } else if (gift == 2) {
+        //     msg = "";
+        // } else {
+        //     System.out.println("Wrong input! Try again!");
+        // }
+
+        boolean cartExist = false;
+        boolean productExist = false;
 
         for (ShoppingCart spc: shoppingCartList) {
             if(spc.getId() == cartId) {
+                cartExist = true;
                 for(Product p : productList) {
                     if(p.getName().equals(productName)) {
-                        if(spc.removeItem(productName) && spc.removeItem(p)) {
-                            doesExist = true;
-                            System.out.println("The product: " + productName + " has been removed successfully!");
+                        productExist = true;
+                        if(spc.removeItem(p, quantity, productId)) {
+                            System.out.println("The product: " + productName + " has been added successfully!");
+                        } else {
+                            System.out.println("The quantity may not enough! Try again!");
+                            removeProduct();
                         }
                     }
                 }
             }
         }
 
-        if(!doesExist) {
-            System.out.println("Cannot find shopping cart ID/product name or the product is not existing in the cart! Try again!");
+        if(!cartExist) {
+            System.out.println("Cannot find shopping cart ID! Try again!");
             removeProduct();
         }
+        if(!productExist) {
+            System.out.println("Cannot find product name! Try again!");
+            removeProduct();
+        }
+        // boolean doesExist = false;
+
+        // for (ShoppingCart spc: shoppingCartList) {
+        //     if(spc.getId() == cartId) {
+        //         for(Product p : productList) {
+        //             if(p.getName().equals(productName)) {
+        //                 if(spc.removeItem(productName) && spc.removeItem(p)) {
+        //                     doesExist = true;
+        //                     System.out.println("The product: " + productName + " has been removed successfully!");
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        // if(!doesExist) {
+        //     System.out.println("Cannot find shopping cart ID/product name or the product is not existing in the cart! Try again!");
+        //     removeProduct();
+        // }
         showInitialOptions();
     }
 
@@ -395,6 +820,58 @@ public class Main {
         showInitialOptions();
     }
 
+    // Apply a coupon to specific cart
+    public static void applyCoupon() {
+        System.out.println("Please enter the cart ID to apply coupon:");
+        int cartId = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Please enter product ID(viewable by displayCart function): ");
+        int productId = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Please enter coupon code:");
+        String code = sc.nextLine();
+
+        boolean cartExist = false;
+        boolean couponExist = false;
+
+        System.out.println(cartId);
+        System.out.println(productId);
+        System.out.println(code);
+        for (ShoppingCart spc: shoppingCartList) {
+            System.out.println(spc.getId());
+            if(spc.getId() == cartId) {
+                cartExist = true;
+                
+                for (Coupon c: couponList) {
+                    System.out.println(c.getCouponCode());
+                    System.out.println(code);
+                    if(c.getCouponCode().equals(code)) {
+                        couponExist = true;
+                        System.out.println(c.getCouponCode() + " exist");
+                        if(spc.setCoupon(c, productId)) {
+                            System.out.println("Coupon is successfully applied!");
+                        } else {
+                            System.out.println("This coupon is not compatible with any product in cart!");
+                            applyCoupon();
+                        }
+                    }
+                }
+            }
+        }
+
+        if(!cartExist) {
+            System.out.println("Cannot find shopping cart ID on the system! Try again!");
+            applyCoupon();
+        }
+        if(!couponExist) {
+            System.out.println("Cannot find coupon code on the system! Try again!");
+            applyCoupon();
+        }
+        showInitialOptions();
+    }
+
     // display all existing ghopping cart ordered by their total weight(ascending)
     public static void displayAllShoppingCart(){
         Collections.sort(shoppingCartList, new SortByTotalWeight());
@@ -408,6 +885,62 @@ public class Main {
             System.out.println("There is no shopping cart created!");
         }
 
+        showInitialOptions();
+    }
+
+    // display a ghopping cart
+    public static void displayCart(){
+        System.out.println("Please enter the cart ID to display:");
+        int cartId = sc.nextInt();
+        sc.nextLine();
+
+        boolean doesExist = false;
+
+        for (ShoppingCart spc: shoppingCartList) {
+            if(spc.getId() == cartId) {
+                doesExist = true;
+                spc.displayCartDetails();
+            }
+        }
+
+        if(!doesExist) {
+            System.out.println("Cannot find shopping cart ID on the system! Try again!");
+            displayCartAmount();
+        }
+        showInitialOptions();
+    }
+
+    // Set message for a specific card item
+    public static void setMessageForCartItem() {
+        boolean cartExist = false;
+
+        System.out.println("Please enter the cart ID to apply coupon:");
+        int cartId = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Please enter product ID(viewable by displayCart function): ");
+        int productId = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Please enter new message:");
+        String msg = sc.nextLine();
+
+        for (ShoppingCart spc: shoppingCartList) {
+            if(spc.getId() == cartId) {
+                cartExist = true;
+                if(spc.setMessage(msg, productId)) {
+                    System.out.println("Message is set successfully!");
+                } else {
+                    System.out.println("Product ID may not correct or this is not a gift product! Try again!");
+                    setMessageForCartItem();
+                }
+            }
+        }
+
+        if(!cartExist) {
+            System.out.println("Cannot find shopping cart ID on the system! Try again!");
+            applyCoupon();
+        }
         showInitialOptions();
     }
 }

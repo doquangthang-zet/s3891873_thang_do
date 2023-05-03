@@ -18,6 +18,6 @@ public class CouponByPrice extends Coupon {
 
     @Override
     public String toString() {
-        return "Code: " + super.getCouponCode() + "\tDiscount Amount: " + price;
+        return "Code: " + this.getCouponCode() + "\tDiscount Amount: " + price + "\tFor Product: " + this.getProduct().getName();
     };
 }

@@ -4,8 +4,7 @@ package vn.edu.rmit.individual_project;
  * @author <Do Quang Thang - S3891873>
  */
 
-public class DigitalProduct extends Product implements UsedAsGifts{
-    private String message;
+public class DigitalProduct extends Product {
 
     /**
      * The constructor is not inherited
@@ -15,18 +14,8 @@ public class DigitalProduct extends Product implements UsedAsGifts{
      * @param quantityAvailable quantity of product
      * @param price price of product
     */
-    public DigitalProduct(String name, String description, int quantityAvailable, double price) {
-        super(name, description, quantityAvailable, price);
-    }
-
-    @Override
-    public void setMessage(String msg) {
-        this.message = msg;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
+    public DigitalProduct(String name, String description, int quantityAvailable, double price, int t) {
+        super(name, description, quantityAvailable, price, t);
     }
 
     /**
@@ -38,6 +27,6 @@ public class DigitalProduct extends Product implements UsedAsGifts{
    */
     @Override
     public String toString() {
-        return "Digital - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tMessage: " + this.getMessage();
+        return "Digital - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tTax type: " + this.getTax().getName();
     }
 }

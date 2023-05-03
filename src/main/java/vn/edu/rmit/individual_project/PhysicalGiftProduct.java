@@ -1,13 +1,9 @@
 package vn.edu.rmit.individual_project;
 
-/**
- * @author <Do Quang Thang - S3891873>
- */
-
-public class PhysicalProduct extends Product {
+public class PhysicalGiftProduct extends Product implements UsedAsGifts {
     //Physical product attributes
     private double weight;
-    // private String message;
+    private String message;
 
     /**
      * The constructor is not inherited
@@ -18,7 +14,7 @@ public class PhysicalProduct extends Product {
      * @param price price of product
      * @param weight weight of physical product
     */
-    public PhysicalProduct(String name, String description, int quantityAvailable, double price, double weight, int t) {
+    public PhysicalGiftProduct(String name, String description, int quantityAvailable, double price, double weight, int t) {
         super(name, description, quantityAvailable, price, t);
         this.weight = weight;
     }
@@ -33,15 +29,15 @@ public class PhysicalProduct extends Product {
         this.weight = weight;
     }
     
-    // @Override
-    // public void setMessage(String msg) {
-    //     this.message = msg;
-    // }
+    @Override
+    public void setMessage(String msg) {
+        this.message = msg;
+    }
 
-    // @Override
-    // public String getMessage() {
-    //     return message;
-    // }
+    @Override
+    public String getMessage() {
+        return message;
+    }
     
     /**
    * String representation of this physical product
@@ -52,6 +48,6 @@ public class PhysicalProduct extends Product {
    */
     @Override
     public String toString() {
-        return "Physical - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tWeight: " + this.getWeight() + "\t\tTax type: " + this.getTax().getName();
+        return "Physical - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tWeight: " + this.getWeight() + "\t\tMessage: " + this.getMessage() + "\t\tTax type: " + this.getTax().getName();
     }
 }

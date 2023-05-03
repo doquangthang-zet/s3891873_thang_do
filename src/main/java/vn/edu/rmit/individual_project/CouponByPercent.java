@@ -18,6 +18,6 @@ public class CouponByPercent extends Coupon{
 
     @Override
     public String toString() {
-        return "Code: " + super.getCouponCode() + "\tDiscount Percent: " + percent;
+        return "Code: " + this.getCouponCode() + "\tDiscount Percent: " + percent + "\tFor Product: " + this.getProduct().getName();
     };
 }
