@@ -203,7 +203,7 @@ public class Main {
 
     // Read cart file
     public static void readCarts() {
-        String cartFilePath = "jcarts.txt";
+        String cartFilePath = "carts.txt";
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(cartFilePath));
