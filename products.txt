@@ -1,5 +1,31 @@
 Product Type, Product Name, Description, Quantity, Price, Weight, TaxType, Message, Coupons (type:code:amount)...
-Digital, game, new game, 12, 10, 0, 2, , price:1:2, percent:2:20
-Physical, laptop, acer nitro, 34, 20, 1, 3, ,  
-PhysicalGift, smartphone, Iphone 15 promax, 56, 15, 1.3, 1, Happy New Year!, price:3:5
-DigitalGift, Microsoft, Words, 100, 30, 0, 3, Happy birthday!, percent:4:10
+Digital, Game, new game, 12, 10, 0, 2, , price:1:2, percent:2:20
+Physical, Laptop, acer nitro, 90, 20, 1, 3, ,  
+PhysicalGift, Smartphone, Iphone 15 promax, 560, 15, 0.3, 1, Happy New Year!, price:3:5
+DigitalGift, Microsoft, Words, 434, 30, 0, 3, Happy birthday!, percent:4:10
+Physical, Television, Samsung 65-inch 4K Smart TV, 420, 799, 20, 2, , percent:5:15
+Physical, Sneakers, Nike Air Jordan 1 Retro, 180, 199, 0.8, 2, , price:6:10
+Digital, E-book, "The Alchemist" by Paulo Coelho, 199, 8, 0, 2, , percent:7:7
+PhysicalGift, SmartWatch, Rolex Submariner, 199, 9000, 0.2, 2, Happy Anniversary!, price:8:500
+Physical, Headphones, Bose QuietComfort 35 II, 103, 329, 0.3, 2, , percent:9:10
+DigitalGift, Spotify, 1 month subscription, 132, 9.99, 0, 2, Happy listening!, price:10:1
+Physical, SportBackpack, The North Face Recon, 142, 99, 1.5, 2, , percent:11:20
+Physical, ChildBicycle, Trek Verve 2 Hybrid, 910, 549, 12, 2, , price:12:50
+Digital, Movie, "The Godfather", 1003, 15, 0, 2, , percent:13:5
+Physical, Jacket, Patagonia Better Sweater, 121, 139, 1.2, 2, , percent:14:15
+PhysicalGift, Sunglasses, Ray-Ban Aviator, 432, 169, 0.2, 2, Happy Birthday!, price:15:20
+DigitalGift, Udemy, "Python for Beginners" course, 560, 99, 0, 2, Happy learning!, percent:16:25
+Physical, Guitar, Fender Stratocaster, 920, 699, 6.5, 2, , price:17:75
+Physical, Watch, Casio G-Shock, 130, 99, 0.2, 2, , percent:18:10
+Digital, Software, Microsoft Office Home and Student, 1, 149, 0, 2, , price:19:20
+Physical, Chair, Herman Miller Aeron, 456, 1395, 25, 2, , percent:20:15
+PhysicalGift, Jewelry, Tiffany & Co. bracelet, 320, 325, 0.1, 2, Happy Valentine's Day!, price:21:50
+DigitalGift, Amazon, $50 gift card, 456, 50, 0, 2, Happy shopping!, percent:22:5
+Physical, Camera, Sony Alpha a7 III, 430, 1999, 1.4, 2, , price:23:100
+Physical, Backpack, Herschel Little America, 329, 99.99, 1.5, 2, , percent:24:10
+Digital, Music, "Thriller" by Michael Jackson, 423, 9, 0, 2, , price:25:2
+Digital, Software, Adobe Creative Cloud, 990, 52, 0, 2, , percent:26:20
+PhysicalGift, Jewelry, Diamond Necklace, 438, 4000, 0.2, 1, Happy Anniversary!, price:27:500
+DigitalGift, iTunes, $50 Gift Card, 839, 50, 0, 3, Happy Holidays!, price:28:5
+Physical, Bicycle, Trek Domane SL 7, 778, 3999, 20, 2, , percent:29:12
+Digital, Online Course, Learn to Code, 899, 99, 0, 2, , price:30:20

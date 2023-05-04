@@ -34,6 +34,6 @@ public class DigitalGiftProduct extends Product implements UsedAsGifts {
    */
     @Override
     public String toString() {
-        return "Digital - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tMessage: " + this.getMessage() + "\t\tTax type: " + this.getTax().getName();
+        return "DigitalGift - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tMessage: " + this.getMessage() + "\t\tTax type: " + this.getTax().getName();
     }
 }

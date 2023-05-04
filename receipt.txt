@@ -1,0 +1,6 @@
+Shopping Cart ID: 3		Total weight: 0.0		Number of product items: 1		Shipping Fee: 0.0
+	-ID: 1	-Name: Microsoft	Quantity: 2	-Price: 30.0	-Tax: Luxury Tax	Message:  
+
+Total Price: 72.0
+
+Date of purchase: 04-05-2023 15:06:28

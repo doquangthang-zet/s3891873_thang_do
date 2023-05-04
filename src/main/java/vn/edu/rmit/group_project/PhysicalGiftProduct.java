@@ -48,6 +48,6 @@ public class PhysicalGiftProduct extends Product implements UsedAsGifts {
    */
     @Override
     public String toString() {
-        return "Physical - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tWeight: " + this.getWeight() + "\t\tMessage: " + this.getMessage() + "\t\tTax type: " + this.getTax().getName();
+        return "PhysicalGift - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tWeight: " + this.getWeight() + "\t\tMessage: " + this.getMessage() + "\t\tTax type: " + this.getTax().getName();
     }
 }
