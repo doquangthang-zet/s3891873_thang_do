@@ -51,7 +51,7 @@ public class Main {
 
     // Read product file
     public static void readProduct() {
-        String productFilePath = "java_projects/src/FurtherPrograming/s3891873_thang_do/products.txt";
+        String productFilePath = "products.txt";
         BufferedReader reader = null;
 
         try {
@@ -203,7 +203,7 @@ public class Main {
 
     // Read cart file
     public static void readCarts() {
-        String cartFilePath = "java_projects/src/FurtherPrograming/s3891873_thang_do/carts.txt";
+        String cartFilePath = "jcarts.txt";
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(cartFilePath));
