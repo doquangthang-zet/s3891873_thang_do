@@ -1,0 +1,4 @@
+Cart ID, CouponCode, Product 1, Product 2, ...
+1, 1, game:3: , smartphone:4:hello
+2, , laptop:4: 
+3, 4, Microsoft:2: 
