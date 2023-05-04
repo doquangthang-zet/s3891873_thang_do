@@ -96,6 +96,7 @@ public class Main {
                 break;
             case 2:
                 createNewPhysicalProduct();
+                11
                 break;
             case 3:
                 showInitialOptions();
