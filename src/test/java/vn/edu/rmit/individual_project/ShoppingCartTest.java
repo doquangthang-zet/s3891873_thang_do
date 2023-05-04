@@ -1,4 +1,4 @@
-// package vn.edu.rmit.individual_project;
+// package vn.edu.rmit.group_project;
 
 // import static org.junit.jupiter.api.Assertions.*;
 
