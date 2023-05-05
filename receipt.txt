@@ -1,0 +1,9 @@
+Shopping Cart ID: 1		Total weight: 1.2		Number of product items: 2		Shipping Fee: 0.12
+	-ID: 1	-Name: Game	Quantity: 3	-Price: 10.0	-Tax: Normal Tax
+
+	-ID: 2	-Name: Smartphone	Quantity: 4	-Price: 15.0	-Tax: Free Tax	Message:  
+Coupon Code: 1	Discount Amount: 2.0	For Product: Game
+
+Total Price: 87.12
+
+Date of purchase: 05-05-2023 17:01:58

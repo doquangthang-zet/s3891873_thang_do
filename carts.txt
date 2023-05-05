@@ -1,4 +1,12 @@
-Cart ID, CouponCode, Product 1, Product 2, ...
-1, 1, game:3: , smartphone:4:hello
-2, , laptop:4: 
-3, 4, Microsoft:2: 
+Cart ID, CouponCode, Product 1(Name:quantity:message), Product 2(Name:quantity:message), ...
+1, 1, Game:3: , Smartphone:4: 
+2, , Laptop:4: 
+3, 4, Microsoft:2:Buy one use whole life!
+4, 24, Backpack:23: , Music:25: 
+5, 18, Watch:18: , Guitar:17: 
+6, 5, Smartphone:3: , Television:12: , Spotify:23:Musicforlife
+7, 13, Movie:2: , Sunglasses:4: ,Chair:5: 
+8, , Bicycle:4: , Jacket:6: 
+9, , Backpack:5: , Software:7: 
+10, 18, Watch:2: , Jewelry:3: , Amazon:4:$50 gift card
+11, 9, Laptop:5: , Headphones:2: 

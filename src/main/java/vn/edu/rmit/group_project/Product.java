@@ -1,10 +1,7 @@
 package vn.edu.rmit.group_project;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * @author <Do Quang Thang - S3891873>
+ * @author <Group 2>
  */
 
 public abstract class Product {
@@ -15,7 +12,6 @@ public abstract class Product {
     private double price;
 
     private TaxType tax;
-    private List<String> couponCodeList;
 
     //Constructor
     public Product(String name, String description, int quantityAvailable, double price, int taxType) {
@@ -30,7 +26,6 @@ public abstract class Product {
         } else {
             tax = new TaxFree();
         }
-        couponCodeList = new ArrayList<>();
     }
 
     //Abstract method
@@ -78,27 +73,19 @@ public abstract class Product {
         this.tax = tax;
     }
 
-    public List<String> getCouponCodeList() {
-        return couponCodeList;
-    }
-
-    public void setCouponCodeList(List<String> couponCodeList) {
-        this.couponCodeList = couponCodeList;
-    }
-
     @Override
     public int hashCode() {
         return this.name.length();
     }
 
     /**
-   * compare two project objects
+   * compare two product objects
    * <p>
-   * Two project objects are equal if they contain the same names
+   * Two product objects are equal if they contain the same names
    * otherwise, return false
    * </p>
    * @param obj an object that compare with
-   * @return true if two projects have the same names, otherwise, return false
+   * @return true if two products have the same names, otherwise, return false
    */
     @Override
     public boolean equals(Object obj) {

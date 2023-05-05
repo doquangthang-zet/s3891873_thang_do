@@ -13,6 +13,7 @@ public class DigitalProduct extends Product {
      * @param description description of the product
      * @param quantityAvailable quantity of product
      * @param price price of product
+     * @param t Taxtype of product
     */
     public DigitalProduct(String name, String description, int quantityAvailable, double price, int t) {
         super(name, description, quantityAvailable, price, t);
@@ -27,6 +28,6 @@ public class DigitalProduct extends Product {
    */
     @Override
     public String toString() {
-        return "Digital - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tTax type: " + this.getTax().getName();
+        return "Digital - " + "Name: " + this.getName() + "\t\t\tDescription: " + this.getDescription() + "\nAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tTax type: " + this.getTax().getName();
     }
 }
