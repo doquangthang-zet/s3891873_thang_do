@@ -1,9 +1,11 @@
 package vn.edu.rmit.group_project;
 
 public abstract class Coupon {
+    //Coupon attribites
     private Product product;
     private String couponCode;
 
+    //Constructor
     public Coupon(Product p, String couponCode) {
         this.product = p;
         this.couponCode = couponCode;
@@ -32,13 +34,13 @@ public abstract class Coupon {
     }
 
     /**
-   * compare two project objects
+   * compare two coupon objects
    * <p>
-   * Two project objects are equal if they contain the same names
+   * Two coupon objects are equal if they contain the same names
    * otherwise, return false
    * </p>
    * @param obj an object that compare with
-   * @return true if two projects have the same names, otherwise, return false
+   * @return true if two coupons have the same names, otherwise, return false
    */
     @Override
     public boolean equals(Object obj) {
@@ -47,16 +49,16 @@ public abstract class Coupon {
             return true;
         }
         
-        /* Check if obj is an instance of Product or not
+        /* Check if obj is an instance of Coupon or not
       "null instanceof [type]" also returns false */
         if(obj == null || obj.getClass() != this.getClass()) {
             return false;
         }
 
-        // typecast obj to Product so that we can compare data members
+        // typecast obj to Coupon so that we can compare data members
         Coupon p = (Coupon) obj;
 
-        // Compare product names and return accordingly
+        // Compare coupon names and return accordingly
         return this.couponCode.equals(p.couponCode);
     }
 

@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -18,6 +19,7 @@ import java.util.Set;
  */
 
 public class Main {
+    //Main attributes
     //Use Set interface
     private static Set <Product> productList;
     //Use List interface
@@ -49,19 +51,22 @@ public class Main {
         showInitialOptions();
     }
 
-    // Read product file
+    // Read product file and create products instances
     public static void readProduct() {
         String productFilePath = "products.txt";
         BufferedReader reader = null;
 
         try {
             reader = new BufferedReader(new FileReader(productFilePath));
-            String line = reader.readLine();
+            String line = reader.readLine(); //read the file line by line
             int skip = 0;
             while (line != null) {
+                //Skip the first line
                 if(skip != 0) {
                     String[] fields = line.split(", ");
                     String type = fields[0];
+
+                    //Check the type of product and create product correctly
                     if(type.equals("Digital")) {
                         String name = fields[1];
                         String description = fields[2];
@@ -73,10 +78,12 @@ public class Main {
 
                         Product p = new DigitalProduct(name, description, quantity, price, taxType);
 
+                        //read each coupon field (can be more than 1)
                         for (int i = 8; i < fields.length; i++) {
                             String[] coupon = fields[i].split(":");
                             String couponType = coupon[0];
 
+                            //Check coupon tyoe and create accordingly
                             if(couponType.equals("price")) {
                                 String code = coupon[1];
                                 double couponAmount = Double.parseDouble(coupon[2]);
@@ -201,7 +208,7 @@ public class Main {
         }
     }
 
-    // Read cart file
+    // Read cart file and create art instances
     public static void readCarts() {
         String cartFilePath = "carts.txt";
         BufferedReader reader = null;
@@ -210,6 +217,7 @@ public class Main {
             String line = reader.readLine();
             int skip = 0;
             while (line != null) {
+                //Skip the first line
                 if(skip != 0) {
                     String[] fields = line.split(", ");
                     int cartIdInFile = Integer.parseInt(fields[0]);
@@ -219,6 +227,7 @@ public class Main {
 
                     String couponCode = fields[1];
 
+                    //Read all product fields (product attributes separated by ":")
                     for (int i = 2; i < fields.length; i++) {
                         String[] product = fields[i].split(":");
 
@@ -231,9 +240,10 @@ public class Main {
                                 spc.addItem(p, productQuantity, 1, 0);
                             }
                         }
-                        spc.setMessage(productMessage, i - 1);
+                        spc.setMessage(productMessage, i - 1); //apply message for each product
                     }
 
+                    // There is a coupon apply that coupon
                     for (Coupon c : couponList) {
                         if(c.getCouponCode().equals(couponCode)) {
                             spc.setCoupon(c);
@@ -257,11 +267,20 @@ public class Main {
     public static void showInitialOptions() {
         System.out.println();
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println("Please select one of the following services:\n1. Create new products\n2. Edit products\n3. View all products\n4. Search Product\n5. Create new coupon\n6. View all coupons\n7. Create new shopping cart\n8. Add product\n9. Remove product\n10. Apply coupon to cart\n11. Display cart amount\n12. Display all shopping cart\n13. Display specific cart\n14. Set message\n15. Print purchase receipts\n0. Quit");
+        System.out.println("Please select one of the following services:\n1. Create new products\n2. Edit products\n3. View all products\n4. Search Product\n5. Create new coupon\n6. View all coupons\n7. Create new shopping cart\n8. Add product\n9. Remove product\n10. Apply coupon to cart\n11. Display cart amount\n12. Display all shopping cart\n13. Display specific cart\n14. Set message\n15. Remove coupon\n16. Print purchase receipts\n0. Quit");
         sc = new Scanner(System.in);
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = 0;
+ 
+        //Check valid integer input
+        try {
+            choice = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            // TODO: handle exception
+            System.out.println("The input must be integer from 0-16");
+            showInitialOptions();
+        }
         switch (choice) {
             case 1:
                 createNewProduct();
@@ -306,6 +325,9 @@ public class Main {
                 setMessageForCartItem();
                 break;
             case 15:
+                removeCoupon();
+                break;
+            case 16:
                 printCartReceipt();
                 break;
             case 0:
@@ -327,8 +349,15 @@ public class Main {
     public static void createNewProduct() {
         System.out.println("Creating new product....\nPlease choose product type:\n1. Digital product\n2. Physical product\n3. Go back");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = 0;
+        try {
+            choice = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            // TODO: handle exception
+            System.out.println("The input must be integer from 0-16");
+            showInitialOptions();
+        }
         switch (choice) {
             case 1:
                 createNewDigitalProduct();
@@ -353,14 +382,21 @@ public class Main {
         String message = "";
         Product newProduct;
 
-        System.out.println("Creating new digital product....\nPlease enter product name: ");
+        System.out.println("Creating new digital product....\nPlease enter product name(String): ");
         String name = sc.nextLine();
-        System.out.println("Please enter product description: ");
+        System.out.println("Please enter product description(String): ");
         String description = sc.nextLine();
-        System.out.println("Please enter product available quantity: ");
-        int quantity = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Please enter product price: ");
+        System.out.println("Please enter product available quantity(int): ");
+        int quantity = 0;
+        try {
+            quantity = sc.nextInt();
+            sc.nextLine();
+        } catch (InputMismatchException e) {
+            // TODO: handle exception
+            System.out.println("The input must be integer!");
+            createNewDigitalProduct();
+        }
+        System.out.println("Please enter product price(double): ");
         double price = sc.nextDouble();
         sc.nextLine();
 
@@ -372,6 +408,7 @@ public class Main {
         int giftChoice = sc.nextInt();
         sc.nextLine();
         
+        //Check if this product is giftable or not
         if(giftChoice == 1) {
             System.out.println("Please enter product message (optional): ");
             message = sc.nextLine();
@@ -379,7 +416,6 @@ public class Main {
             System.out.println("Wrong input! Try again!");
             createNewDigitalProduct();
         }
-        
 
         if(name.equals("") || description.equals("")) {
             System.out.println("Please enter all the fields!");
@@ -396,6 +432,7 @@ public class Main {
             }
 
             if(!doesExist) { 
+                // If giftable, create digital gift product instead
                 if(giftChoice == 1) {
                     System.out.println(tFree.getName());
                     newProduct = new DigitalGiftProduct(name, description, quantity, price, taxtype);
@@ -416,33 +453,33 @@ public class Main {
     */
     public static void createNewPhysicalProduct() {
         String message = "";
-        TaxType t;
         Product newProduct;
-        System.out.println("Creating new physical product....\nPlease enter product name: ");
+        System.out.println("Creating new physical product....\nPlease enter product name(String): ");
         String name = sc.nextLine();
-        System.out.println("Please enter product description: ");
+        System.out.println("Please enter product description(String): ");
         String description = sc.nextLine();
-        System.out.println("Please enter product available quantity: ");
+        System.out.println("Please enter product available quantity(int): ");
         int quantity = sc.nextInt();
         sc.nextLine();
-        System.out.println("Please enter product price: ");
+        System.out.println("Please enter product price(double): ");
         double price = sc.nextDouble();
         sc.nextLine();
 
-        System.out.println("Please enter product weight: ");
+        System.out.println("Please enter product weight(double): ");
         double weight = sc.nextDouble();
         sc.nextLine();
 
-        System.out.println("Please enter type of tax (1.Tax-free 2.Normal-tax 3.Luxury-tax): ");
+        System.out.println("Please enter type of tax (1.Tax-free 2.Normal-tax 3.Luxury-tax)(int): ");
         int taxtype = sc.nextInt();
         sc.nextLine();
         
-        System.out.println("Do you want to use this product as gift? (1.Yes 2.No): ");
+        System.out.println("Do you want to use this product as gift? (1.Yes 2.No)(int): ");
         int giftChoice = sc.nextInt();
         sc.nextLine();
         
+        //Check if this product is giftable or not, if giftable, set message
         if(giftChoice == 1) {
-            System.out.println("Please enter product message (optional): ");
+            System.out.println("Please enter product message (optional)(String): ");
             message = sc.nextLine();
         } else if (giftChoice != 2) {
             System.out.println("Wrong input! Try again!");
@@ -464,6 +501,7 @@ public class Main {
             }
 
             if(!doesExist) {
+                // If this is a gift product create Physical gift prduct instead
                 if(giftChoice == 1) {
                     newProduct = new PhysicalGiftProduct(name, description, quantity, price, weight, taxtype);
                     ((UsedAsGifts)newProduct).setMessage(message);        
@@ -505,6 +543,7 @@ public class Main {
                     sc.nextLine();
                     p.setPrice(price);
 
+                    // Check if this is a gift or physical product to change weight and message
                     if(p instanceof PhysicalProduct) {
                         System.out.println("Please enter new product weight: ");
                         double weight = sc.nextDouble();
@@ -563,7 +602,7 @@ public class Main {
             for (Product p: productList) {
                 System.out.println();
                 System.out.println(p.toString());
-                System.out.println("###########################################");
+                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             }
         } else {
             System.out.println("The shop doesn't have any product!");
@@ -583,9 +622,9 @@ public class Main {
             boolean doesExist = false;
             for (Product p: productList) {
                 if(p.getName().equals(name)) {
-                    System.out.println("***************************************");
+                    System.out.println("*********************************************************");
                     System.out.println(p.toString());
-                    System.out.println("***************************************");
+                    System.out.println("*********************************************************");
                     doesExist = true;
                 }
             }
@@ -628,16 +667,21 @@ public class Main {
                     }
                 }
                 
-
+                //If coupon code not exist and product already exist, create new one
                 if(!couponExist) {
                     for (Product p: productList) {
                         if(p.getName().equals(name)) {
                             productExist = true;
                             
-                            Coupon c = new CouponByPrice(p, code, price);
-                            couponList.add(c);
-                            p.getCouponCodeList().add(c.getCouponCode());
-                            System.out.println(c.getCouponCode() + " added successfully!");
+                            // If the price of coupon > price of product, try again
+                            if(price >= p.getPrice()) {
+                                System.out.println("The price of this coupon cannot be greater than price of product!");
+                                createNewCoupon();
+                            } else {
+                                Coupon c = new CouponByPrice(p, code, price);
+                                couponList.add(c);
+                                System.out.println(c.getCouponCode() + " added successfully!");
+                            }
                         }
                     }                    
                     if(!productExist) {
@@ -659,6 +703,9 @@ public class Main {
             if(name.equals("") || code.equals("")) {
                 System.out.println("Please enter all the fields!");
                 createNewCoupon();
+            } else if(percent > 99 || percent < 1) { //If the percent value is > 99 or < 0, try again!
+                System.out.println("The amount of deduct percent must be from 1 to 99!");
+                createNewCoupon();
             } else {
                 boolean couponExist = false;
                 boolean productExist = false;
@@ -671,7 +718,6 @@ public class Main {
                     }
                 }
                 
-
                 if(!couponExist) {
                     for (Product p: productList) {
                         if(p.getName().equals(name)) {
@@ -679,7 +725,6 @@ public class Main {
                             
                             Coupon c = new CouponByPercent(p, code, percent);
                             couponList.add(c);
-                            p.getCouponCodeList().add(c.getCouponCode());
                             System.out.println(c.getCouponCode() + " added successfully!");
                         }
                     }                    
@@ -724,7 +769,6 @@ public class Main {
 
     // Add a specific product to a specific shopping cart
     public static void addProduct() {
-        String msg = "";
         int productId = 0;
 
         System.out.println("Add new items or add more items to existing onces: \n1. New items\n2. Existing items");
@@ -765,7 +809,7 @@ public class Main {
                         if(spc.addItem(p, quantity, addingChoice, productId)) {
                             System.out.println("The product: " + productName + " has been added successfully!");
                         } else {
-                            System.out.println("The quantity may not enough! Try again!");
+                            System.out.println("The quantity may not enough or id not match product name or this cart is purchased! Try again!");
                             addProduct();
                         }
                     }
@@ -813,9 +857,9 @@ public class Main {
                     if(p.getName().equals(productName)) {
                         productExist = true;
                         if(spc.removeItem(p, quantity, productId)) {
-                            System.out.println("The product: " + productName + " has been added successfully!");
+                            System.out.println("The product: " + productName + " has been removed successfully!");
                         } else {
-                            System.out.println("The quantity may not enough! Try again!");
+                            System.out.println("The quantity may not enough or id not match product name or this cart has been purchased! Try again!");
                             removeProduct();
                         }
                     }
@@ -863,10 +907,6 @@ public class Main {
         int cartId = sc.nextInt();
         sc.nextLine();
 
-        // System.out.println("Please enter product ID(viewable by displayCart function): ");
-        // int productId = sc.nextInt();
-        // sc.nextLine();
-
         System.out.println("Please enter coupon code:");
         String code = sc.nextLine();
 
@@ -874,7 +914,6 @@ public class Main {
         boolean couponExist = false;
 
         for (ShoppingCart spc: shoppingCartList) {
-            System.out.println(spc.getId());
             if(spc.getId() == cartId) {
                 cartExist = true;
                 
@@ -884,7 +923,7 @@ public class Main {
                         if(spc.setCoupon(c)) {
                             System.out.println("Coupon is successfully applied!");
                         } else {
-                            System.out.println("This coupon is not compatible with any product in cart!");
+                            System.out.println("This coupon is not compatible with any product in cart or this cart has been purchased!");
                             applyCoupon();
                         }
                     }
@@ -911,6 +950,7 @@ public class Main {
         if(shoppingCartList.size() > 0) {
             for (ShoppingCart sc: shoppingCartList) {
                 System.out.println(sc.toString());
+                System.out.println("------------------------------------------------------------------");
             }
         } else {
             System.out.println("There is no shopping cart created!");
@@ -919,7 +959,7 @@ public class Main {
         showInitialOptions();
     }
 
-    // display a ghopping cart
+    // display a specific shopping cart
     public static void displayCart(){
         System.out.println("Please enter the cart ID to display:");
         int cartId = sc.nextInt();
@@ -936,7 +976,7 @@ public class Main {
 
         if(!doesExist) {
             System.out.println("Cannot find shopping cart ID on the system! Try again!");
-            displayCartAmount();
+            displayCart();
         }
         showInitialOptions();
     }
@@ -945,7 +985,7 @@ public class Main {
     public static void setMessageForCartItem() {
         boolean cartExist = false;
 
-        System.out.println("Please enter the cart ID to apply coupon:");
+        System.out.println("Please enter the cart ID to set message:");
         int cartId = sc.nextInt();
         sc.nextLine();
 
@@ -962,7 +1002,7 @@ public class Main {
                 if(spc.setMessage(msg, productId)) {
                     System.out.println("Message is set successfully!");
                 } else {
-                    System.out.println("Product ID may not correct or this is not a gift product! Try again!");
+                    System.out.println("Product ID may not correct or this is not a gift product or this cart has been purchased! Try again!");
                     setMessageForCartItem();
                 }
             }
@@ -970,24 +1010,54 @@ public class Main {
 
         if(!cartExist) {
             System.out.println("Cannot find shopping cart ID on the system! Try again!");
-            applyCoupon();
+            setMessageForCartItem();
         }
         showInitialOptions();
     }
 
+
+    // Remove a coupon from specific cart
+    public static void removeCoupon() {
+        System.out.println("Please enter the cart ID to remove coupon:");
+        int cartId = sc.nextInt();
+        sc.nextLine();
+
+        boolean cartExist = false;
+
+        for (ShoppingCart spc: shoppingCartList) {
+            if(spc.getId() == cartId) {
+                cartExist = true;
+                
+                if(spc.setCoupon(null)) {
+                    System.out.println("Coupon is successfully removed!");
+                } else {
+                    System.out.println("Cannot remove, this cart may be purchased!");
+                    removeCoupon();
+                }
+            }
+        }
+
+        if(!cartExist) {
+            System.out.println("Cannot find shopping cart ID on the system! Try again!");
+            removeCoupon();
+        }
+        showInitialOptions();
+    }
     // Print cart receipt function
     public static void printCartReceipt() {
         try {
             FileWriter writer = new FileWriter("receipt.txt");
             boolean cartExist = false;
 
-            System.out.println("Please enter the cart ID to apply coupon:");
+            System.out.println("Please enter the cart ID to print receipt:");
             int cartId = sc.nextInt();
             sc.nextLine();
     
             for (ShoppingCart spc: shoppingCartList) {
                 if(spc.getId() == cartId) {
                     cartExist = true;
+                    spc.setPurchased(true);
+                    
                     LocalDateTime myDateObj = LocalDateTime.now();
                     DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 

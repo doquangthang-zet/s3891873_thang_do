@@ -17,6 +17,7 @@ public class PhysicalProduct extends Product {
      * @param quantityAvailable quantity of product
      * @param price price of product
      * @param weight weight of physical product
+     * @param t Taxtype of product
     */
     public PhysicalProduct(String name, String description, int quantityAvailable, double price, double weight, int t) {
         super(name, description, quantityAvailable, price, t);
@@ -33,16 +34,6 @@ public class PhysicalProduct extends Product {
         this.weight = weight;
     }
     
-    // @Override
-    // public void setMessage(String msg) {
-    //     this.message = msg;
-    // }
-
-    // @Override
-    // public String getMessage() {
-    //     return message;
-    // }
-    
     /**
    * String representation of this physical product
    * <p>
@@ -52,6 +43,6 @@ public class PhysicalProduct extends Product {
    */
     @Override
     public String toString() {
-        return "Physical - " + "Name: " + this.getName() + "\t\tDescription: " + this.getDescription() + "\t\tAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tWeight: " + this.getWeight() + "\t\tTax type: " + this.getTax().getName();
+        return "Physical - " + "Name: " + this.getName() + "\t\t\tDescription: " + this.getDescription() + "\nAvailable Quantity: " + this.getQuantityAvailable() + "\t\tPrice: " + this.getPrice() + "\t\tWeight: " + this.getWeight() + "\t\tTax type: " + this.getTax().getName();
     }
 }

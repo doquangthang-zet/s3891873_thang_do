@@ -1,9 +1,11 @@
 package vn.edu.rmit.group_project;
 
 public abstract class TaxType {
+    //Attributes
     private String name;
     private int amount;
 
+    //Setter and getter
     public String getName() {
         return name;
     }
