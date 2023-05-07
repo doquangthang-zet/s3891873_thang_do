@@ -4,7 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author <Do Quang Thang - S3891873>
+ * @author <Group 2>
+ * s3891873 - Do Quang Thang
+ * s3965673 - Phung Hoang Long
+ * s3924489 - Du Tuan Vu
+ * s3930338 - Nhat Mn
  */
 
 public class ShoppingCart {
@@ -80,6 +84,7 @@ public class ShoppingCart {
                         product.setQuantityAvailable(product.getQuantityAvailable() - quantity);
                         products.put(i, product);
                         productsQuantity.put(i, productsQuantity.get(i) + quantity);
+                        totalWeight = calculateTotalWeight();
                         return true;
                     }
                 }
@@ -97,6 +102,7 @@ public class ShoppingCart {
         products.put(productCount, product);
         productsQuantity.put(productCount, quantity);
 
+        totalWeight = calculateTotalWeight();
         return true;
     }
 
@@ -133,22 +139,27 @@ public class ShoppingCart {
                 // Check the quantity and decide remove the whole product or not
                 if(quantity == productsQuantity.get(productId)) { 
                     //If the whole produuct is removed, check the coupon and disable it 
-                    if(product.equals(coupon.getProduct())) {
-                        setCoupon(null);
+                    if(coupon != null) {
+                        if(product.equals(coupon.getProduct())) {
+                            setCoupon(null);
+                        }
                     }
+                    
                     product.setQuantityAvailable(product.getQuantityAvailable() + quantity);
-                    totalWeight = calculateTotalWeight();
 
                     products.remove(i);
                     productsQuantity.remove(i);
                     productsMsg.remove(i);
+
+                    totalWeight = calculateTotalWeight();
                     return true;
                 } else if (quantity < productsQuantity.get(productId)) { 
                     product.setQuantityAvailable(product.getQuantityAvailable() + quantity);       
-                    totalWeight = calculateTotalWeight();
 
                     products.put(i, product);
                     productsQuantity.put(i, productsQuantity.get(i) - quantity);
+
+                    totalWeight = calculateTotalWeight();
                     return true;
                 } else {
                     return false;
@@ -172,14 +183,17 @@ public class ShoppingCart {
         shippingFee = 0;
         totalCoupon = 0;
 
-        //Check if the cart contains any product matching the coupon, if yes continue, else return false
-        for (int i : products.keySet()) {
-            if(coupon.getProduct().getName().equals(products.get(i).getName())) {
-                //Calculate the coupon value for this cart
-                if(coupon instanceof CouponByPrice) {
-                    totalCoupon = ((CouponByPrice)coupon).getPrice() * productsQuantity.get(i);
-                } else if (coupon instanceof CouponByPercent) {
-                    totalCoupon = (((CouponByPercent)coupon).getPercent() * products.get(i).getPrice() * productsQuantity.get(i) / 100);
+        // IF the pass in value is null => remove the coupon
+        if(coupon != null) {
+            //Check if the cart contains any product matching the coupon, if yes continue, else return false
+            for (int i : products.keySet()) {
+                if(coupon.getProduct().getName().equals(products.get(i).getName())) {
+                    //Calculate the coupon value for this cart
+                    if(coupon instanceof CouponByPrice) {
+                        totalCoupon = ((CouponByPrice)coupon).getPrice() * productsQuantity.get(i);
+                    } else if (coupon instanceof CouponByPercent) {
+                        totalCoupon = (((CouponByPercent)coupon).getPercent() * products.get(i).getPrice() * productsQuantity.get(i) / 100);
+                    }
                 }
             }
         }
@@ -292,6 +306,30 @@ public class ShoppingCart {
 
     public void setPurchased(boolean purchased) {
         isPurchased = purchased;
+    }
+
+    public Map<Integer, Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Map<Integer, Product> products) {
+        this.products = products;
+    }
+
+    public Map<Integer, Integer> getProductsQuantity() {
+        return productsQuantity;
+    }
+
+    public void setProductsQuantity(Map<Integer, Integer> productsQuantity) {
+        this.productsQuantity = productsQuantity;
+    }
+
+    public Map<Integer, String> getProductsMsg() {
+        return productsMsg;
+    }
+
+    public void setProductsMsg(Map<Integer, String> productsMsg) {
+        this.productsMsg = productsMsg;
     }
 
     /**
