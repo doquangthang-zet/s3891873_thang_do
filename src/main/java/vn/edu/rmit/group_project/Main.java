@@ -15,7 +15,11 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * @author <Do Quang Thang - S3891873>
+ * @author <Group 2>
+ * s3891873 - Do Quang Thang
+ * s3965673 - Phung Hoang Long
+ * s3924489 - Du Tuan Vu
+ * s3930338 - Nhat Mn
  */
 
 public class Main {
@@ -26,9 +30,6 @@ public class Main {
     private static List <ShoppingCart> shoppingCartList;
     private static List <Coupon> couponList;
     private static int cardId;
-    private static TaxFree tFree;
-    private static NormalTax tNormal;
-    private static LuxuryTax tLuxury;
     private static Scanner sc;
 
     public static void main(String[] args) {
@@ -36,12 +37,9 @@ public class Main {
         shoppingCartList = new ArrayList<>();
         couponList = new ArrayList<>();
         cardId = 0;
-        tFree = new TaxFree();
-        tNormal = new NormalTax();
-        tLuxury = new LuxuryTax();
 
-        readProduct();
-        readCarts();
+        // readProduct();
+        // readCarts();
 
         System.out.println();
         System.out.println("Welcome to our shopping service!");
@@ -72,9 +70,9 @@ public class Main {
                         String description = fields[2];
                         int quantity = Integer.parseInt(fields[3]);
                         double price = Double.parseDouble(fields[4]);
-                        double weight = Double.parseDouble(fields[5]);
+                        // double weight = Double.parseDouble(fields[5]);
                         int taxType = Integer.parseInt(fields[6]);
-                        String msg = fields[7];
+                        // String msg = fields[7];
 
                         Product p = new DigitalProduct(name, description, quantity, price, taxType);
 
@@ -107,7 +105,7 @@ public class Main {
                         double price = Double.parseDouble(fields[4]);
                         double weight = Double.parseDouble(fields[5]);
                         int taxType = Integer.parseInt(fields[6]);
-                        String msg = fields[7];
+                        // String msg = fields[7];
 
                         Product p = new PhysicalProduct(name, description, quantity, price, weight, taxType);
 
@@ -135,7 +133,7 @@ public class Main {
                         String description = fields[2];
                         int quantity = Integer.parseInt(fields[3]);
                         double price = Double.parseDouble(fields[4]);
-                        double weight = Double.parseDouble(fields[5]);
+                        // double weight = Double.parseDouble(fields[5]);
                         int taxType = Integer.parseInt(fields[6]);
                         String msg = fields[7];
 
@@ -434,7 +432,6 @@ public class Main {
             if(!doesExist) { 
                 // If giftable, create digital gift product instead
                 if(giftChoice == 1) {
-                    System.out.println(tFree.getName());
                     newProduct = new DigitalGiftProduct(name, description, quantity, price, taxtype);
                     ((UsedAsGifts)newProduct).setMessage(message);
                 } else {
@@ -830,7 +827,6 @@ public class Main {
 
     // Remove a specific product from a specific shopping cart
     public static void removeProduct() {
-        String msg = "";
         int productId = 0;
         System.out.println("Please enter shopping cart ID to remove: ");
         int cartId = sc.nextInt();
