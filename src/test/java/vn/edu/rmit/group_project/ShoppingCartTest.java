@@ -21,6 +21,7 @@ import org.junit.jupiter.api.*;
  */
 
 public class ShoppingCartTest {
+    // Testing toString method
     @Test
     public void stringRepresentationTest() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 3, 123.45, 1.5, 2);
@@ -29,6 +30,7 @@ public class ShoppingCartTest {
         assertEquals("Shopping Cart ID: 0\t\tTotal weight: 3.0\t\tNumber of product items: 1\t\tTax: 24.69\t\tTotal price: 271.89000000000004", spc.toString());
     }
 
+    // Test adding new item to shopping cart
     @Test
     public void addNewItemToShoppingCart() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 30, 123.45, 1.5, 2);
@@ -47,6 +49,7 @@ public class ShoppingCartTest {
         assertEquals(8, p2.getQuantityAvailable());
     }
 
+    //Test adding more items to existing items in cart
     @Test
     public void addExistingItemToShoppingCart() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 30, 123.45, 1.5, 2);
@@ -67,6 +70,7 @@ public class ShoppingCartTest {
         assertEquals(7, spc.getProductsQuantity().get(1));
     }
 
+    //Test add items with unapropriate quantity to cart
     @Test
     public void cannotAddItemWithNoQuantityOrBiggerQuantity() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 3, 123.45, 1.5,2);
@@ -86,6 +90,7 @@ public class ShoppingCartTest {
         assertEquals(0, p3.getQuantityAvailable());
     }
 
+    //Test remove items from cart
     @Test
     public void removeItemFromShoppingCart() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 3, 123.45, 1.5,1);
@@ -108,6 +113,7 @@ public class ShoppingCartTest {
         assertEquals(12, p2.getQuantityAvailable());
     }
 
+    //Test remove item with inappropriate quantity from cart
     @Test
     public void cannotRemoveNonExistingItemOrBiggerQuantityItem() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 3, 123.45, 1.5,1);
@@ -124,6 +130,7 @@ public class ShoppingCartTest {
         assertTrue(spc.removeItem(p1,2,1));
     }
 
+    //Test display cart amount function
     @Test
     public void checkCartAmount() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 3, 100, 10,1);
@@ -143,6 +150,7 @@ public class ShoppingCartTest {
         assertEquals(1346.0, spc.cartAmount());
     }
 
+    //Test set message for an item function
     @Test
     public void setMessage() {
         Product p1 = new PhysicalGiftProduct("laptop", "Acer Nitro 5", 3, 100, 10,1);
@@ -166,6 +174,7 @@ public class ShoppingCartTest {
         assertEquals("Hello", spc.getProductsMsg().get(2));
     }
 
+    //Test set coupon for a cart
     @Test
     public void setCoupon() {
         Product p1 = new PhysicalGiftProduct("laptop", "Acer Nitro 5", 3, 100, 10,1);
@@ -185,6 +194,7 @@ public class ShoppingCartTest {
         assertEquals("happy", spc.getCoupon().getCouponCode());
     }
 
+    // Test setcoupon to cart which has no compatible product
     @Test
     public void cannotSetCouponIfNoCompatibleProduct() {
         Product p1 = new PhysicalGiftProduct("laptop", "Acer Nitro 5", 3, 100, 10,1);
@@ -203,6 +213,7 @@ public class ShoppingCartTest {
         assertFalse(spc.setCoupon(c2));
     }
 
+    //Test sorting cart function
     @Test
     public void cartSortedByTotalWeight() {
         List<ShoppingCart> spcList = new ArrayList<>();
