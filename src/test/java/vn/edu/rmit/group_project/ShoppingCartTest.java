@@ -50,7 +50,6 @@ public class ShoppingCartTest {
     @Test
     public void addExistingItemToShoppingCart() {
         Product p1 = new PhysicalProduct("laptop", "Acer Nitro 5", 30, 123.45, 1.5, 2);
-        Product p2 = new DigitalProduct("smartphone", "Oppo reno 5", 12, 134.56, 3);
 
         ShoppingCart spc = new ShoppingCart(0);
 

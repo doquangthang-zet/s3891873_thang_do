@@ -38,8 +38,8 @@ public class Main {
         couponList = new ArrayList<>();
         cardId = 0;
 
-        // readProduct();
-        // readCarts();
+        readProduct();
+        readCarts();
 
         System.out.println();
         System.out.println("Welcome to our shopping service!");
